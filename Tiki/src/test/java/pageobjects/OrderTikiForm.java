@@ -21,7 +21,7 @@ public class OrderTikiForm {
 	}
 	
 	//define actions
-	public void OpenTikiHome() {
+	public void OpenTikiHome() throws InterruptedException {
 		this.driver.get("http://tiki.vn/");
 		this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
@@ -35,8 +35,14 @@ public class OrderTikiForm {
 		this.driver.findElement(By.cssSelector("#popup-login-email")).sendKeys("tiki@ngaima.com");
 		this.driver.findElement(By.cssSelector("#login_password")).sendKeys("123Tiki");
 		this.driver.findElement(By.cssSelector("#login_popup_submit")).click();
-		//wait
+		
+		WebDriverWait wait = new WebDriverWait(driver,5);
+		wait.until(ExpectedConditions.elementSelectionStateToBe(By.cssSelector("#onesignal-popover-dialog"), true));
+		
+		this.driver.findElement(By.cssSelector("<button id=\"onesignal-popover-cancel-button\" class=\"align-right secondary popover-button\">Để sau</button>"));
 		this.driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
+		//wait
 
 	}
 	
@@ -45,7 +51,8 @@ public class OrderTikiForm {
 	
 	public void addandCheckOut() {
 		//open hot deal
-		this.driver.findElement(By.cssSelector("#header > div.top-promo > div > div > a:nth-child(7)")).click();
+		this.driver.findElement(By.linkText("https://tiki.vn/deal-hot?src=header_label")).click();
+		//this.driver.findElement(By.cssSelector("#header > div.top-promo > div > div > a:nth-child(7)")).click();
 		//choose one product (random)
 		this.driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		this.driver.findElement(By.cssSelector("#deal-all-root > div > div > div.flex-container >"
@@ -75,7 +82,7 @@ public class OrderTikiForm {
 
 		WebDriverWait wait = new WebDriverWait(this.driver, 5);
 		WebElement ordercomplete = wait.until(ExpectedConditions.presenceOfElementLocated(txtalert));
-		Assert.assertEquals(message, ordercomplete.getAttribute("completetext"));
+		Assert.assertEquals(message, ordercomplete.getAttribute("Đặt hàng thành công"));
 		
 	}
 	

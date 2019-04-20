@@ -39,7 +39,7 @@ public class Hooks {
 	
 	@After
 	public void AfterScrnario(Scenario scenario) {
-		driver.quit();
+		
 		
 		//them code screen shoot vao day
 		if (scenario.isFailed()) {
@@ -50,5 +50,6 @@ public class Hooks {
 				System.err.println(platformdontsupportscreenshot.getMessage());
 			}
 		}
+		//driver.quit();
 	}
 }

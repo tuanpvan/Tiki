@@ -17,7 +17,7 @@ public class OrderproductStepdefs {
 	WebDriver driver;
 	OrderTikiForm tiki;
 
-	//ham khoi tao
+	//ham khoi tao (constructor)
 	public OrderproductStepdefs() {
 		this.driver = Hooks.driver;
 		this.tiki = new OrderTikiForm(this.driver);
